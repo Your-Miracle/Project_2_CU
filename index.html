@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды по маршруту</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #87CEEB; /* Небесно-голубой фон */
+            color: #333; /* Темный цвет текста для контраста */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            background-color: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый фон формы */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            margin: auto; /* Центрируем форму */
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50; /* Цвет кнопки */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #45a049; /* Цвет кнопки при наведении */
+        }
+        .result {
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Полупрозрачный фон для результатов */
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Введите начальную и конечную точки маршрута</h1>
+    <form action="/" method="POST">
+        <label for="start_city">Начальный город:</label>
+        <input type="text" id="start_city" name="start_city" required>
+
+        <label for="end_city">Конечный город:</label>
+        <input type="text" id="end_city" name="end_city" required>
+
+        <button type="submit">Оценить погоду</button>
+    </form>
+
+    {% if result %}
+        <div class="result">
+            <h2>Результаты для маршрута:</h2>
+            <p>{{ result['evaluation'] }}</p>
+            <p>Средняя температура: {{ result['temperature'] }}</p>
+            <p>Скорость ветра: {{ result['wind_speed'] }}</p>
+            <p>Вероятность осадков: {{ result['rain_probability'] }}</p>
+        </div>
+    {% endif %}
+
+    {% if error %}
+        <h2 class="error">{{ error }}</h2>
+    {% endif %}
+</body>
+</html>
